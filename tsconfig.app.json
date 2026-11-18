@@ -6,7 +6,7 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],"resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts"
