@@ -1,59 +1,64 @@
-# Souqly
+# 🛒 Souqly E-Commerce Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.21.
+> **Your Universal Shopping Destination** — A modern, full-featured e-commerce web application built with Angular, designed to deliver a seamless shopping experience with clean UX and robust architecture.
 
-## Development server
+---
 
-To start a local development server, run:
+##  Brand Identity & Design System
+* **Brand Name:** Souqly (سوقلي)
+* **Color Palette (Sky / Nebo Theme):**
+  * **Primary Deep Navy (`#0A3C55` / `#04202E`):** Used for headers, main typography, and structure.
+  * **Brand Ocean Blue (`#1786B4` / `#4FB3DA`):** Used for primary buttons, active states, and interactive accents.
+  * **Background Ice Blue (`#E1F2FA`):** Used for clean, modern section and page backgrounds.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+##  Key Features & Flow Architecture
 
-## Code scaffolding
+1. **Authentication & Security (`authGuard` & `guestGuard`):**
+   * Guest routes (Login/Register/Forgot Password) are protected for logged-out users.
+   * Secure routes (Cart, Wishlist, Checkout, Orders, Change Password) require authentication via `authGuard`.
+   * **Smart Return URL:** Redirects unauthenticated users attempting to add items to cart/wishlist to `/login?returnUrl=...` and automatically completes the action upon successful login.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2. **Real-time Cart Management:**
+   * Powered by Angular **Signals** (`CartService`) for instant, reactive updates in the navbar counter without page reloads.
 
-```bash
-ng generate component component-name
-```
+3. **Wishlist System:**
+   * Fast $O(1)$ lookup utilizing reactive Sets for heart icons on product cards, preloaded right after login.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+4. **Checkout & Online Payment:**
+   * Supports both **Cash on Delivery** and **Online Secure Payment** integrated via Stripe Checkout sessions, returning users smoothly to `/allorders`.
 
-```bash
-ng generate --help
-```
+5. **UI/UX Enhancements:**
+   * Modern skeletons for loading states, global HTTP Interceptors for error handling (Toasts), and a dedicated 404 Not Found page.
 
-## Building
+---
 
-To build the project run:
+##  Tech Stack
+* **Frontend Framework:** Angular
+* **State Management & Reactivity:** Angular Signals, RxJS
+* **Styling & UI:** CSS / Modern Responsive Layouts
+* **API Integration:** RESTful APIs (Products, Categories, Brands, Cart, Wishlist, Orders)
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+##  Route Access Table
 
-## Running unit tests
+| Page / Route | Access Guard | Key Endpoints / Actions |
+| :--- | :--- | :--- |
+| **Home** (`/home`) | Public | `GET /products`, `categories`, `brands` |
+| **Products** (`/products`) | Public | `GET /products` (Pagination & Search) |
+| **Product Details** (`/products/:id`) | Public | `GET /products/:id` |
+| **Login / Register** | Guest Guard | Sign in, Sign up, Forgot/Reset Password |
+| **Cart** (`/cart`) | Auth Guard | `GET/POST /cart`, `PUT/DELETE /cart/:id` |
+| **Wishlist** (`/wishlist`) | Auth Guard | `GET/POST /wishlist`, `DELETE /wishlist/:id` |
+| **Checkout** (`/checkout/:cartId`) | Auth Guard | Cash & Online Stripe Orders |
+| **Orders** (`/allorders`) | Auth Guard | `GET /orders/user/:userId` |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+##  Getting Started
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-username/souqly-ecommerce.git](https://github.com/your-username/souqly-ecommerce.git)
