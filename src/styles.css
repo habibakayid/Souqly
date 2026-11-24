@@ -8,11 +8,11 @@
   --color-primary: #0F5E83;
   --color-brand: #1786B4;
   --color-sky: #4FB3DA;
-  --color-mist: #98D5EE;
-  --color-cloud: #E1F2FA;
+  --color-cloud: #e6ecf0; 
+  --color-mist: #f1f5f8; 
 }
 
-body { @apply bg-cloud text-navy antialiased; font-family: 'Inter', sans-serif; }
+body { @apply bg-cloud text-navy antialiased; font-family: 'Inter', sans-serif; background-color: #fafbfc;}
 html[lang='ar'] body { font-family: 'Cairo', 'Inter', sans-serif; }
 
 @layer components {

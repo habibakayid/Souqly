@@ -1,15 +1,45 @@
-<footer class="mt-16 bg-navy text-white">
-  <div class="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 py-10 text-center">
-    <a routerLink="/home">
-      <img src="/assets/images/logo.png" alt="Souqly" class="h-9 w-auto brightness-0 invert" />
-    </a>
-    <nav class="flex flex-wrap items-center justify-center gap-6">
-      @for (l of links; track l.path) {
-        <a [routerLink]="l.path" class="text-sm text-white/80 transition hover:text-white">{{ l.key | translate }}</a>
-      }
+<footer class="mt-20 border-t border-cloud bg-white">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="space-y-4 sm:col-span-2">
+      <a routerLink="/home" class="inline-block">
+        <img src="/assets/images/logo.png" alt="Souqly" class="h-10 w-auto" />
+      </a>
+      <p class="max-w-sm text-sm leading-relaxed text-navy/70">{{ 'footer.tagline' | translate }}</p>
+    </div>
+
+    <nav [attr.aria-label]="'footer.shop' | translate">
+      <h3 class="mb-4 text-sm font-bold text-ink">{{ 'footer.shop' | translate }}</h3>
+      <ul class="space-y-2.5">
+        @for (l of shop; track l.path) {
+          <li>
+            <a [routerLink]="l.path" class="text-sm text-navy/70 transition hover:text-primary">{{ l.key | translate }}</a>
+          </li>
+        }
+      </ul>
     </nav>
-    <p class="border-t border-white/10 pt-5 text-xs text-white/60">
-      {{ 'footer.rights' | translate: { year } }}
-    </p>
+
+    <nav [attr.aria-label]="'footer.account' | translate">
+      <h3 class="mb-4 text-sm font-bold text-ink">{{ 'footer.account' | translate }}</h3>
+      <ul class="space-y-2.5">
+        @for (l of account; track l.path) {
+          <li>
+            <a [routerLink]="l.path" class="text-sm text-navy/70 transition hover:text-primary">{{ l.key | translate }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-cloud">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 sm:flex-row">
+      <p class="text-xs text-navy/60">{{ 'footer.rights' | translate: { year } }}</p>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold text-primary transition hover:bg-mist"
+        (click)="lang.toggle()"
+      >
+        <i class="fa-solid fa-globe"></i> {{ 'nav.otherLang' | translate }}
+      </button>
+    </div>
   </div>
 </footer>

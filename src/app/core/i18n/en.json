@@ -22,7 +22,11 @@
     "passwordChanged": "Password changed", "profileUpdated": "Profile updated",
     "cartAdded": "Added to cart", "itemRemoved": "Item removed", "cartCleared": "Cart cleared",
     "wishAdded": "Added to wishlist", "wishRemoved": "Removed from wishlist",
-    "addressAdded": "Address added", "addressRemoved": "Address removed"
+    "addressAdded": "Address added", "addressRemoved": "Address removed",
+    "rights": "© {{year}} Souqly. All rights reserved.",
+  "tagline": "Everything you need, delivered to your door.",
+  "shop": "Shop",
+  "account": "Account"
   },
   "auth": {
     "welcomeBack": "Welcome back", "signIn": "Sign in", "signingIn": "Signing in...",
@@ -118,4 +122,5 @@
     "emptyTitle": "No data yet", "emptyText": "Place your first order and your analytics will appear here.",
     "spentLabel": "Spent (EGP)"
   }
+
 }

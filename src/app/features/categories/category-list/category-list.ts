@@ -7,6 +7,7 @@ import { CategoriesService } from '../../../core/services/categories.service';
 import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 import { Skeleton } from '../../../shared/components/skeleton/skeleton';
 import { SearchPipe } from '../../../shared/pipes/search-pipe';
+import { Category } from '../../../core/models/category';
 
 @Component({
   selector: 'app-category-list',
@@ -14,6 +15,8 @@ import { SearchPipe } from '../../../shared/pipes/search-pipe';
   templateUrl: './category-list.html',
 })
 export class CategoryList {
-  protected readonly categories = toSignal(inject(CategoriesService).list().pipe(catchError(() => of([]))));
+ protected readonly categories = toSignal(
+  inject(CategoriesService).list().pipe(catchError(() => of([] as Category[]))),
+);
   protected readonly term = signal('');
 }
