@@ -47,4 +47,5 @@ export interface ProductQuery {
   brands?: string[];
   minPrice?: number;
   maxPrice?: number;
+  subcategories?: string[];
 }

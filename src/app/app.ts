@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { afterNextRender, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 import { LanguageService } from './core/services/language.service';
 
 @Component({
@@ -10,5 +11,9 @@ import { LanguageService } from './core/services/language.service';
 export class App {
   constructor() {
     inject(LanguageService);
+    const auth = inject(AuthService);
+    afterNextRender(() => {
+      if (auth.isLoggedIn()) auth.verify().subscribe();
+    });
   }
 }

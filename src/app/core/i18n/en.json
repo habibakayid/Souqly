@@ -15,7 +15,13 @@
     "changePassword": "Change password", "logout": "Logout", "account": "Account",
     "menu": "Menu", "otherLang": "العربية"
   },
-  "footer": { "rights": "© {{year}} Souqly. All rights reserved." },
+  "footer": {
+  "rights": "© {{year}} Souqly. All rights reserved.",
+  "tagline": "Everything you need, delivered to your door.",
+  "shop": "Shop",
+  "account": "Account",
+  "top": "Back to top"
+},
   "toast": {
     "welcome": "Welcome back", "registered": "Account created, please sign in",
     "codeSent": "Code sent to your email", "passwordReset": "Password updated, please sign in",

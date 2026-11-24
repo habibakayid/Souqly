@@ -7,6 +7,9 @@ import { tap } from 'rxjs';
 import { env } from '../environments/env';
 import { Profile, User } from '../models/user';
 import { StorageService } from './storage.service';
+import {  HttpErrorResponse } from '@angular/common/http';
+import { catchError, EMPTY} from 'rxjs';
+
 
 interface AuthResponse { message: string; token: string; user: { name: string; email: string; role: string } }
 
@@ -54,7 +57,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  /** لو مش مسجل دخول يودّيه للّوجين ويرجع false */
+ 
   requireLogin(): boolean {
     if (this.isLoggedIn()) return true;
     this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
@@ -114,4 +117,15 @@ export class AuthService {
       return null;
     }
   }
+
+
+  verify() {
+    return this.http.get(`${this.api}/auth/verifyToken`).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status !== 401 && err.status >= 400 && err.status < 500) this.logout();
+        return EMPTY;
+      }),
+    );
+  }
+
 }

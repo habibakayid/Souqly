@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,6 +10,7 @@ import { LanguageService } from '../../../core/services/language.service';
   templateUrl: './footer.html',
 })
 export class Footer {
+  private readonly doc = inject(DOCUMENT);
   protected readonly lang = inject(LanguageService);
   protected readonly year = new Date().getFullYear();
 
@@ -23,4 +25,8 @@ export class Footer {
     { path: '/wishlist', key: 'nav.wishlist' },
     { path: '/cart', key: 'nav.cart' },
   ];
+
+  protected toTop(): void {
+    this.doc.defaultView?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

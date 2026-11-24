@@ -10,12 +10,23 @@ import { ProductsService } from '../../../core/services/products.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
+import { Reviews } from '../../../shared/components/reviews/reviews';
 import { SectionTitle } from '../../../shared/components/section-title/section-title';
 import { EgpPipe } from '../../../shared/pipes/egp-pipe';
 
 @Component({
   selector: 'app-product-details',
-  imports: [RouterLink, NgOptimizedImage, DecimalPipe, TranslatePipe, EgpPipe, ProductCard, SectionTitle, EmptyState],
+  imports: [
+    RouterLink,
+    NgOptimizedImage,
+    DecimalPipe,
+    TranslatePipe,
+    EgpPipe,
+    ProductCard,
+    SectionTitle,
+    EmptyState,
+    Reviews,
+  ],
   templateUrl: './product-details.html',
 })
 export class ProductDetails {
@@ -27,7 +38,7 @@ export class ProductDetails {
  
   readonly id = input.required<string>();
 
-  
+ 
   protected readonly product = toSignal(
     toObservable(this.id).pipe(
       switchMap((id) => this.api.get(id).pipe(catchError(() => of(null)), startWith(undefined))),

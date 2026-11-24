@@ -35,18 +35,31 @@ export class CategoryDetails {
     { initialValue: [] },
   );
 
+  /** الـ subcategory المختارة (بتتصفّر لما الفئة تتغير) */
+  protected readonly sub = linkedSignal<string | null>(() => {
+    this.id();
+    return null;
+  });
+
   protected readonly page = linkedSignal(() => {
     this.id();
+    this.sub();
     return 1;
   });
 
   protected readonly result = toSignal(
-    toObservable(computed(() => ({ id: this.id(), page: this.page() }))).pipe(
-      switchMap(({ id, page }) =>
-        this.productsApi.list({ categories: [id], page, limit: 12 }).pipe(catchError(() => of(null)), startWith(undefined)),
+    toObservable(computed(() => ({ id: this.id(), page: this.page(), sub: this.sub() }))).pipe(
+      switchMap(({ id, page, sub }) =>
+        this.productsApi
+          .list({ categories: [id], subcategories: sub ? [sub] : undefined, page, limit: 12 })
+          .pipe(catchError(() => of(null)), startWith(undefined)),
       ),
     ),
   );
+
+  protected pickSub(id: string): void {
+    this.sub.set(this.sub() === id ? null : id);
+  }
 
   protected goPage(p: number): void {
     this.page.set(p);

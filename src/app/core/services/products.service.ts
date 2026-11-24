@@ -19,6 +19,7 @@ export class ProductsService {
     if (q.brands?.length) p = p.set('brand[in]', q.brands.join(','));
     if (q.minPrice != null) p = p.set('price[gte]', q.minPrice);
     if (q.maxPrice != null) p = p.set('price[lte]', q.maxPrice);
+    if (q.subcategories?.length) p = p.set('subcategory[in]', q.subcategories.join(','));
     return this.http.get<Paged<Product>>(this.url, { params: p });
   }
 

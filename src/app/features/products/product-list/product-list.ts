@@ -3,10 +3,11 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, of, startWith, switchMap } from 'rxjs';
-import { ProductQuery } from '../../../core/models/product';
+import { ProductQuery, SubCategory } from '../../../core/models/product';
 import { BrandsService } from '../../../core/services/brands.service';
 import { CategoriesService } from '../../../core/services/categories.service';
 import { ProductsService } from '../../../core/services/products.service';
+import { SubcategoriesService } from '../../../core/services/subcategories.service';
 import { EmptyState } from '../../../shared/components/empty-state/empty-state';
 import { Pagination } from '../../../shared/components/pagination/pagination';
 import { ProductCard } from '../../../shared/components/product-card/product-card';
@@ -24,11 +25,12 @@ export class ProductList {
   private readonly router = inject(Router);
   private readonly productsApi = inject(ProductsService);
 
-  // الـ query params بتتربط تلقائيًا (withComponentInputBinding)
+  
   readonly keyword = input<string>();
   readonly sort = input<string>();
   readonly page = input<string>();
   readonly category = input<string>();
+  readonly subcategory = input<string>();
   readonly brand = input<string>();
   readonly min = input<string>();
   readonly max = input<string>();
@@ -36,13 +38,30 @@ export class ProductList {
   protected readonly view = signal<'grid' | 'list'>('grid');
   protected readonly filtersOpen = signal(false);
 
-  protected readonly categories = toSignal(inject(CategoriesService).list().pipe(catchError(() => of([]))), { initialValue: [] });
-  protected readonly brands = toSignal(inject(BrandsService).list().pipe(catchError(() => of([]))), { initialValue: [] });
+  protected readonly categories = toSignal(
+    inject(CategoriesService)
+      .list()
+      .pipe(catchError(() => of([]))),
+    { initialValue: [] },
+  );
+  protected readonly subcategories = toSignal(
+    inject(SubcategoriesService)
+      .list()
+      .pipe(catchError(() => of([] as SubCategory[]))),
+    { initialValue: [] },
+  );
+  protected readonly brands = toSignal(
+    inject(BrandsService)
+      .list()
+      .pipe(catchError(() => of([]))),
+    { initialValue: [] },
+  );
 
   protected readonly selCategories = computed(() => csv(this.category()));
+  protected readonly selSubcategories = computed(() => csv(this.subcategory()));
   protected readonly selBrands = computed(() => csv(this.brand()));
   protected readonly hasFilters = computed(
-    () => !!(this.category() || this.brand() || this.min() || this.max() || this.sort()),
+    () => !!(this.category() || this.subcategory() || this.brand() || this.min() || this.max() || this.sort()),
   );
 
   protected readonly sortOptions = [
@@ -60,15 +79,21 @@ export class ProductList {
     sort: this.sort() || undefined,
     keyword: this.keyword() || undefined,
     categories: this.selCategories(),
+    subcategories: this.selSubcategories(),
     brands: this.selBrands(),
     minPrice: num(this.min()),
     maxPrice: num(this.max()),
   }));
 
-  /** undefined = بيحمّل، null = error */
+  
   protected readonly result = toSignal(
     toObservable(this.query).pipe(
-      switchMap((q) => this.productsApi.list(q).pipe(catchError(() => of(null)), startWith(undefined))),
+      switchMap((q) =>
+        this.productsApi.list(q).pipe(
+          catchError(() => of(null)),
+          startWith(undefined),
+        ),
+      ),
     ),
   );
 
@@ -84,13 +109,28 @@ export class ProductList {
     return next.length ? next.join(',') : null;
   }
 
-  protected toggleCategory(id: string): void { this.go({ category: this.toggle(this.selCategories(), id) }); }
-  protected toggleBrand(id: string): void { this.go({ brand: this.toggle(this.selBrands(), id) }); }
-  protected setSort(value: string): void { this.go({ sort: value || null }); }
-  protected applyPrice(min: string, max: string): void { this.go({ min: min || null, max: max || null }); }
-  protected presetMax(value: number): void { this.go({ min: null, max: String(value) }); }
-  protected goPage(p: number): void { this.go({ page: p === 1 ? null : String(p) }, false); }
+  protected toggleCategory(id: string): void {
+    this.go({ category: this.toggle(this.selCategories(), id) });
+  }
+  protected toggleSubcategory(id: string): void {
+    this.go({ subcategory: this.toggle(this.selSubcategories(), id) });
+  }
+  protected toggleBrand(id: string): void {
+    this.go({ brand: this.toggle(this.selBrands(), id) });
+  }
+  protected setSort(value: string): void {
+    this.go({ sort: value || null });
+  }
+  protected applyPrice(min: string, max: string): void {
+    this.go({ min: min || null, max: max || null });
+  }
+  protected presetMax(value: number): void {
+    this.go({ min: null, max: String(value) });
+  }
+  protected goPage(p: number): void {
+    this.go({ page: p === 1 ? null : String(p) }, false);
+  }
   protected clearAll(): void {
-    this.go({ category: null, brand: null, min: null, max: null, sort: null });
+    this.go({ category: null, subcategory: null, brand: null, min: null, max: null, sort: null });
   }
 }
