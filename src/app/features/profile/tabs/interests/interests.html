@@ -1,1 +1,42 @@
-<p>interests works!</p>
+@if (wishlist.items().length) {
+  <div class="space-y-8">
+    <div>
+      <h2 class="text-xl font-extrabold text-ink">{{ 'interests.title' | translate }}</h2>
+      <p class="text-sm text-navy/70">{{ 'interests.basedOn' | translate: { count: wishlist.items().length } }}</p>
+    </div>
+
+    @for (g of groups(); track g.id) {
+      <section>
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between text-sm">
+              <h3 class="font-bold text-ink">{{ g.name ?? ('interests.other' | translate) }}</h3>
+              <span class="font-semibold text-primary">{{ g.percent }}%</span>
+            </div>
+            <div class="mt-1 h-2 overflow-hidden rounded-full bg-cloud">
+              <div class="h-full rounded-full bg-primary" [style.width.%]="g.percent"></div>
+            </div>
+          </div>
+          @if (g.id !== 'other') {
+            <a [routerLink]="['/categories', g.id]" class="shrink-0 text-xs font-semibold text-primary hover:underline">
+              {{ 'interests.explore' | translate: { name: g.name ?? '' } }}
+            </a>
+          }
+        </div>
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          @for (p of g.products.slice(0, 4); track p._id) {
+            <app-product-card [product]="p" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <app-empty-state
+    icon="fa-regular fa-heart"
+    [title]="'interests.emptyTitle' | translate"
+    [text]="'interests.emptyText' | translate"
+    [actionLabel]="'common.browseProducts' | translate"
+    actionLink="/products"
+  />
+}

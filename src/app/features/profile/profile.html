@@ -1,1 +1,25 @@
-<p>profile works!</p>
+<div class="mx-auto max-w-6xl px-4 py-8">
+  <header class="mb-6 flex items-center gap-4">
+    <span class="grid h-14 w-14 place-items-center rounded-full bg-primary text-xl font-bold text-white">
+      {{ auth.userName().charAt(0).toUpperCase() || 'U' }}
+    </span>
+    <div class="min-w-0">
+      <h1 class="truncate text-xl font-extrabold text-ink">{{ auth.userName() }}</h1>
+      <p class="truncate text-sm text-navy/60">{{ auth.profile()?.email }}</p>
+    </div>
+  </header>
+
+  <nav class="mb-6 flex gap-1 overflow-x-auto border-b border-cloud">
+    @for (t of tabs; track t.path) {
+      <a
+        [routerLink]="t.path"
+        routerLinkActive="!border-primary !text-primary"
+        class="whitespace-nowrap border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-navy/70 transition hover:text-primary"
+      >
+        <i [class]="t.icon"></i> {{ t.key | translate }}
+      </a>
+    }
+  </nav>
+
+  <router-outlet />
+</div>

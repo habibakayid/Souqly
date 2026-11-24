@@ -1,1 +1,84 @@
-<p>dashboard works!</p>
+@if (loading()) {
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><app-skeleton [count]="4" /></div>
+} @else if (stats(); as s) {
+  @if (s.totalOrders) {
+    <div class="space-y-6">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <app-stat-card icon="fa-solid fa-box" [label]="'dashboard.orders' | translate" [value]="s.totalOrders" />
+        <app-stat-card icon="fa-solid fa-wallet" [label]="'dashboard.spent' | translate" [value]="s.totalSpent | egp" />
+        <app-stat-card icon="fa-solid fa-receipt" [label]="'dashboard.avg' | translate" [value]="s.avgOrder | egp" />
+        <app-stat-card
+          icon="fa-solid fa-truck-fast"
+          [label]="'dashboard.delivered' | translate"
+          [value]="s.delivered"
+          [hint]="'dashboard.paidCount' | translate: { count: s.paid }"
+        />
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        <section class="card p-5 lg:col-span-2">
+          <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.monthly' | translate }}</h3>
+          <div class="relative h-64"><canvas #monthly></canvas></div>
+        </section>
+        <section class="card p-5">
+          <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.payment' | translate }}</h3>
+          <div class="relative h-64"><canvas #payment></canvas></div>
+        </section>
+      </div>
+
+      <section class="card p-5">
+        <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.byCategory' | translate }}</h3>
+        <div class="relative h-72"><canvas #category></canvas></div>
+      </section>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        <section class="card p-5">
+          <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.topProducts' | translate }}</h3>
+          <ul class="space-y-3">
+            @for (p of s.topProducts; track p.id) {
+              <li class="flex items-center gap-3">
+                <img [src]="p.image" [alt]="p.title" width="40" height="40" loading="lazy" class="h-10 w-10 rounded-lg bg-mist object-contain" />
+                <span class="line-clamp-1 flex-1 text-sm font-semibold text-ink">{{ p.title }}</span>
+                <span class="text-xs text-navy/60">{{ 'dashboard.itemsCount' | translate: { count: p.count } }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <section class="card p-5">
+          <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.topBrands' | translate }}</h3>
+          <ul class="space-y-3">
+            @for (b of s.topBrands; track b.name) {
+              <li class="flex items-center justify-between text-sm">
+                <span class="font-semibold text-ink">{{ b.name }}</span>
+                <span class="text-xs text-navy/60">{{ 'dashboard.itemsCount' | translate: { count: b.value } }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <section class="card p-5">
+          <h3 class="mb-3 font-bold text-ink">{{ 'dashboard.deliveredTo' | translate }}</h3>
+          <ul class="space-y-3">
+            @for (c of s.topCities; track c.name) {
+              <li class="flex items-center justify-between text-sm">
+                <span class="font-semibold text-ink">{{ c.name }}</span>
+                <span class="text-xs text-navy/60">{{ 'dashboard.ordersCount' | translate: { count: c.value } }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  } @else {
+    <app-empty-state
+      icon="fa-solid fa-chart-pie"
+      [title]="'dashboard.emptyTitle' | translate"
+      [text]="'dashboard.emptyText' | translate"
+      [actionLabel]="'common.startShopping' | translate"
+      actionLink="/products"
+    />
+  }
+} @else {
+  <app-empty-state icon="fa-solid fa-triangle-exclamation" [title]="'dashboard.emptyTitle' | translate" />
+}

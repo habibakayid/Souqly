@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import { DecimalPipe, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ import { EgpPipe } from '../../pipes/egp-pipe';
 
 @Component({
   selector: 'app-product-card',
-  imports: [RouterLink, NgOptimizedImage, TranslatePipe, EgpPipe],
+  imports: [RouterLink, NgOptimizedImage, DecimalPipe, TranslatePipe, EgpPipe],
   templateUrl: './product-card.html',
 })
 export class ProductCard {

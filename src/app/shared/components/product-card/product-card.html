@@ -31,7 +31,7 @@
   </a>
 
   <div class="flex flex-1 flex-col gap-1.5 p-3">
-    <p class="text-xs font-semibold text-primary">{{ p.category?.name }}</p>
+    <p class="text-xs font-semibold text-primary">{{ p.category.name }}</p>
     <a [routerLink]="['/products', p._id]" class="line-clamp-2 text-sm font-bold text-ink hover:text-primary">
       {{ p.title }}
     </a>
