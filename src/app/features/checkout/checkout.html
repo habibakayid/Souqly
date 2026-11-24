@@ -1,1 +1,138 @@
-<p>checkout works!</p>
+<div class="mx-auto max-w-6xl px-4 py-8">
+  @if (cart.items().length === 0 && !cart.loading()) {
+    <app-empty-state
+      icon="fa-solid fa-cart-shopping"
+      [title]="'checkout.emptyTitle' | translate"
+      [text]="'checkout.emptyText' | translate"
+      [actionLabel]="'common.startShopping' | translate"
+      actionLink="/products"
+    />
+  } @else {
+    <h1 class="mb-6 text-2xl font-extrabold text-ink">{{ 'checkout.title' | translate }}</h1>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="grid gap-6 lg:grid-cols-[1fr_360px]" novalidate>
+      <div class="space-y-6">
+        
+        <section class="card space-y-4 p-5">
+          <h2 class="font-bold text-ink">{{ 'checkout.shipping' | translate }}</h2>
+
+          @if (addresses.list().length) {
+            <p class="text-sm text-navy/70">{{ 'checkout.selectSaved' | translate }}</p>
+            <div class="grid gap-2 sm:grid-cols-2">
+              @for (a of addresses.list(); track a._id) {
+                <button
+                  type="button"
+                  class="rounded-xl border-2 p-3 text-start transition"
+                  [class]="selectedId() === a._id ? 'border-primary bg-mist' : 'border-cloud hover:border-primary'"
+                  (click)="pick(a)"
+                >
+                  <p class="font-bold text-ink">{{ a.name }}</p>
+                  <p class="line-clamp-2 text-xs text-navy/70">{{ a.details }}, {{ a.city }}</p>
+                  <p class="text-xs text-navy/70">{{ a.phone }}</p>
+                </button>
+              }
+            </div>
+            @if (selectedId()) {
+              <button type="button" class="text-sm font-semibold text-primary hover:underline" (click)="useDifferent()">
+                {{ 'checkout.useDifferent' | translate }}
+              </button>
+            }
+          }
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="co-city" class="mb-1 block text-sm font-semibold text-ink">{{ 'checkout.city' | translate }}</label>
+              <input id="co-city" type="text" formControlName="city" class="input" [placeholder]="'checkout.cityPh' | translate" />
+              @if (show(form.controls.city)) { <p class="err">{{ 'checkout.cityRequired' | translate }}</p> }
+            </div>
+            <div>
+              <label for="co-phone" class="mb-1 block text-sm font-semibold text-ink">{{ 'checkout.phone' | translate }}</label>
+              <input id="co-phone" type="tel" formControlName="phone" class="input" />
+              @if (show(form.controls.phone)) { <p class="err">{{ 'auth.err.phone' | translate }}</p> }
+            </div>
+          </div>
+
+          <div>
+            <label for="co-details" class="mb-1 block text-sm font-semibold text-ink">{{ 'checkout.street' | translate }}</label>
+            <textarea id="co-details" rows="3" formControlName="details" class="input" [placeholder]="'checkout.streetPh' | translate"></textarea>
+            @if (show(form.controls.details)) { <p class="err">{{ 'checkout.addressRequired' | translate }}</p> }
+          </div>
+
+          @if (!selectedId()) {
+            <label class="flex cursor-pointer items-center gap-2 text-sm text-ink">
+              <input type="checkbox" class="accent-primary" formControlName="save" (change)="toggleSave($any($event.target).checked)" />
+              {{ 'checkout.saveAddress' | translate }}
+            </label>
+            @if (form.controls.save.value) {
+              <div>
+                <label for="co-name" class="mb-1 block text-sm font-semibold text-ink">{{ 'checkout.addressName' | translate }}</label>
+                <input id="co-name" type="text" formControlName="addressName" class="input" [placeholder]="'checkout.addressNamePh' | translate" />
+                @if (show(form.controls.addressName)) { <p class="err">{{ 'common.required' | translate }}</p> }
+              </div>
+            }
+          }
+        </section>
+
+        
+        <section class="card space-y-3 p-5">
+          <h2 class="font-bold text-ink">{{ 'checkout.payment' | translate }}</h2>
+          <button
+            type="button"
+            class="flex w-full items-center gap-3 rounded-xl border-2 p-4 text-start transition"
+            [class]="payment() === 'cash' ? 'border-primary bg-mist' : 'border-cloud hover:border-primary'"
+            (click)="payment.set('cash')"
+          >
+            <i class="fa-solid fa-money-bill-wave text-xl text-primary"></i>
+            <span>
+              <span class="block font-bold text-ink">{{ 'checkout.cash' | translate }}</span>
+              <span class="block text-xs text-navy/70">{{ 'checkout.cashText' | translate }}</span>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="flex w-full items-center gap-3 rounded-xl border-2 p-4 text-start transition"
+            [class]="payment() === 'online' ? 'border-primary bg-mist' : 'border-cloud hover:border-primary'"
+            (click)="payment.set('online')"
+          >
+            <i class="fa-regular fa-credit-card text-xl text-primary"></i>
+            <span>
+              <span class="block font-bold text-ink">{{ 'checkout.online' | translate }}</span>
+              <span class="block text-xs text-navy/70">{{ 'checkout.onlineText' | translate }}</span>
+            </span>
+          </button>
+        </section>
+      </div>
+
+     
+      <aside class="card h-fit space-y-4 p-5 lg:sticky lg:top-24">
+        <h2 class="font-bold text-ink">{{ 'checkout.summary' | translate }}</h2>
+        <ul class="max-h-64 space-y-3 overflow-y-auto pe-1">
+          @for (item of cart.items(); track item._id) {
+            <li class="flex items-center gap-3">
+              <img [src]="item.product.imageCover" [alt]="item.product.title" width="48" height="48" loading="lazy" class="h-12 w-12 rounded-lg bg-mist object-contain" />
+              <div class="min-w-0 flex-1">
+                <p class="line-clamp-1 text-sm font-semibold text-ink">{{ item.product.title }}</p>
+                <p class="text-xs text-navy/60">× {{ item.count }}</p>
+              </div>
+              <p class="text-sm font-bold text-ink">{{ item.price * item.count | egp }}</p>
+            </li>
+          }
+        </ul>
+        <div class="flex justify-between border-t border-cloud pt-4 text-lg font-extrabold text-ink">
+          <span>{{ 'common.total' | translate }}</span>
+          <span>{{ cart.total() | egp }}</span>
+        </div>
+        <button type="submit" class="btn w-full" [disabled]="loading()">
+          @if (loading()) {
+            {{ 'checkout.processing' | translate }}
+          } @else {
+            {{ (payment() === 'cash' ? 'checkout.placeOrder' : 'checkout.continuePayment') | translate }}
+          }
+        </button>
+        <a routerLink="/cart" class="block text-center text-sm font-semibold text-primary hover:underline">
+          {{ 'checkout.backToCart' | translate }}
+        </a>
+      </aside>
+    </form>
+  }
+</div>

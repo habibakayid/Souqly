@@ -1,1 +1,143 @@
-<p>product-details works!</p>
+<div class="mx-auto max-w-7xl px-4 py-6">
+  @if (product() === undefined) {
+    <div class="grid animate-pulse gap-8 md:grid-cols-2">
+      <div class="aspect-square rounded-2xl bg-cloud"></div>
+      <div class="space-y-4">
+        <div class="h-6 w-1/3 rounded bg-cloud"></div>
+        <div class="h-8 w-4/5 rounded bg-cloud"></div>
+        <div class="h-5 w-1/2 rounded bg-cloud"></div>
+        <div class="h-24 rounded bg-cloud"></div>
+      </div>
+    </div>
+  } @else if (product(); as p) {
+    <!-- breadcrumb -->
+    <nav class="mb-5 flex flex-wrap items-center gap-2 text-xs text-navy/60" aria-label="Breadcrumb">
+      <a routerLink="/home" class="hover:text-primary">{{ 'common.home' | translate }}</a>
+      <i class="fa-solid fa-chevron-right text-[9px] rtl:rotate-180"></i>
+      <a [routerLink]="['/categories', p.category._id]" class="hover:text-primary">{{ p.category.name }}</a>
+      <i class="fa-solid fa-chevron-right text-[9px] rtl:rotate-180"></i>
+      <span class="line-clamp-1 text-ink">{{ p.title }}</span>
+    </nav>
+
+    <div class="grid gap-8 md:grid-cols-2">
+     
+      <div class="space-y-3">
+        <div class="aspect-square overflow-hidden rounded-2xl bg-mist">
+          @if (activeImage(); as img) {
+            <img [ngSrc]="img" width="700" height="700" priority [alt]="p.title" class="h-full w-full object-contain p-4" />
+          }
+        </div>
+        @if (images().length > 1) {
+          <div class="flex gap-2 overflow-x-auto pb-1">
+            @for (img of images(); track img) {
+              <button
+                type="button"
+                class="h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 bg-mist"
+                [class]="img === activeImage() ? 'border-primary' : 'border-transparent'"
+                (click)="activeImage.set(img)"
+              >
+                <img [src]="img" [alt]="p.title" width="64" height="64" loading="lazy" class="h-full w-full object-contain" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+     
+      <div class="space-y-4">
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <a [routerLink]="['/categories', p.category._id]" class="font-semibold text-primary hover:underline">{{ p.category.name }}</a>
+          @if (p.brand) {
+            <span class="text-navy/30">•</span>
+            <a [routerLink]="['/brands', p.brand._id]" class="font-semibold text-navy hover:underline">{{ p.brand.name }}</a>
+          }
+        </div>
+
+        <h1 class="text-2xl font-extrabold text-ink sm:text-3xl">{{ p.title }}</h1>
+
+        <div class="flex flex-wrap items-center gap-3 text-sm">
+          <span class="flex items-center gap-1">
+            @for (s of stars; track s) {
+              <i [class]="s <= p.ratingsAverage ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-amber-400'"></i>
+            }
+            <span class="ms-1 font-semibold text-ink">{{ p.ratingsAverage }}</span>
+          </span>
+          <span class="text-navy/60">{{ 'common.reviews' | translate: { count: p.ratingsQuantity } }}</span>
+          <span class="text-navy/60">{{ 'common.sold' | translate: { count: p.sold } }}</span>
+        </div>
+
+        <div class="flex items-end gap-3">
+          <p class="text-3xl font-extrabold text-ink">{{ p.priceAfterDiscount ?? p.price | egp }}</p>
+          @if (p.priceAfterDiscount) {
+            <p class="text-lg text-navy/50 line-through">{{ p.price | egp }}</p>
+            <span class="badge">-{{ ((p.price - p.priceAfterDiscount) / p.price) * 100 | number: '1.0-0' }}%</span>
+          }
+        </div>
+
+        <p class="text-sm font-semibold" [class]="p.quantity > 0 ? 'text-emerald-600' : 'text-red-600'">
+          {{ p.quantity > 0 ? ('common.inStock' | translate: { count: p.quantity }) : ('common.outOfStock' | translate) }}
+        </p>
+
+        <p class="leading-relaxed text-navy/80">{{ p.description }}</p>
+
+        @if (p.subcategory?.length) {
+          <div class="flex flex-wrap gap-2">
+            @for (s of p.subcategory; track s._id) {
+              <span class="rounded-full bg-mist px-3 py-1 text-xs font-semibold text-navy">{{ s.name }}</span>
+            }
+          </div>
+        }
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <div class="flex items-center overflow-hidden rounded-lg border border-cloud">
+            <button type="button" class="px-3 py-2.5 hover:bg-mist" [attr.aria-label]="'cart.decrease' | translate" (click)="step(-1, p.quantity)">
+              <i class="fa-solid fa-minus text-xs"></i>
+            </button>
+            <span class="min-w-10 text-center font-bold">{{ qty() }}</span>
+            <button type="button" class="px-3 py-2.5 hover:bg-mist" [attr.aria-label]="'cart.increase' | translate" (click)="step(1, p.quantity)">
+              <i class="fa-solid fa-plus text-xs"></i>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="btn flex-1 sm:flex-none"
+            [disabled]="p.quantity === 0 || cart.busyId() === p._id"
+            (click)="cart.add(p._id, qty())"
+          >
+            <i class="fa-solid fa-cart-plus"></i> {{ 'products.addToCart' | translate }}
+          </button>
+
+          <button
+            type="button"
+            class="grid h-11 w-11 place-items-center rounded-lg border border-cloud hover:border-primary"
+            [attr.aria-label]="'wishlist.toggle' | translate"
+            (click)="wishlist.toggle(p._id)"
+          >
+            <i [class]="wishlist.has(p._id) ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart text-ink'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    
+    @if (related().length) {
+      <section class="mt-14">
+        <app-section-title [title]="'products.moreFrom' | translate: { name: p.category.name }" />
+        <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          @for (r of related(); track r._id) {
+            <app-product-card [product]="r" />
+          }
+        </div>
+      </section>
+    }
+  } @else {
+    <app-empty-state
+      icon="fa-solid fa-box-open"
+      [title]="'products.notFoundTitle' | translate"
+      [text]="'products.notFoundText' | translate"
+      [actionLabel]="'common.browseProducts' | translate"
+      actionLink="/products"
+    />
+  }
+</div>

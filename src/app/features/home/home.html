@@ -1,1 +1,78 @@
-<p>home works!</p>
+<div class="mx-auto max-w-7xl space-y-14 px-4 py-6">
+  <!-- Hero -->
+  @if (hero(); as slides) {
+    <app-hero-carousel [slides]="slides" />
+  } @else {
+    <div class="h-72 animate-pulse rounded-2xl bg-cloud sm:h-96"></div>
+  }
+
+  <!-- Categories -->
+  <section>
+    <app-section-title
+      [title]="'home.byCategory' | translate"
+      [linkText]="'common.viewAll' | translate"
+      link="/categories"
+    />
+    @if (categories(); as cats) {
+      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+        @for (c of cats.slice(0, 12); track c._id) {
+          <a [routerLink]="['/categories', c._id]" class="group flex flex-col items-center gap-2 text-center">
+            <span class="block h-24 w-24 overflow-hidden rounded-full bg-mist ring-2 ring-transparent transition group-hover:ring-primary">
+              <img [src]="c.image" [alt]="c.name" width="96" height="96" loading="lazy" class="h-full w-full object-cover" />
+            </span>
+            <span class="text-sm font-semibold text-ink group-hover:text-primary">{{ c.name }}</span>
+          </a>
+        }
+      </div>
+    } @else {
+      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+        <app-skeleton [count]="6" shape="line" />
+      </div>
+    }
+  </section>
+
+  
+  <section>
+    <app-section-title
+      [title]="'home.trending' | translate"
+      [linkText]="'common.viewAll' | translate"
+      link="/products"
+    />
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+      @if (trending(); as list) {
+        @for (p of list; track p._id) {
+          <app-product-card [product]="p" />
+        }
+      } @else {
+        <app-skeleton [count]="8" />
+      }
+    </div>
+  </section>
+
+  
+  @defer (on viewport) {
+    @if (brands(); as list) {
+      @if (list.length) {
+        <section>
+          <app-section-title
+            [title]="'home.byBrand' | translate"
+            [linkText]="'common.viewAll' | translate"
+            link="/brands"
+          />
+          <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+            @for (b of list; track b._id) {
+              <a
+                [routerLink]="['/brands', b._id]"
+                class="card flex h-24 items-center justify-center p-4 transition hover:border-primary"
+              >
+                <img [src]="b.image" [alt]="b.name" width="120" height="60" loading="lazy" class="max-h-full w-auto object-contain" />
+              </a>
+            }
+          </div>
+        </section>
+      }
+    }
+  } @placeholder {
+    <div class="h-40"></div>
+  }
+</div>

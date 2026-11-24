@@ -1,1 +1,11 @@
-<p>order-success works!</p>
+<section class="mx-auto flex max-w-md flex-col items-center gap-4 px-4 py-20 text-center">
+  <span class="grid h-20 w-20 place-items-center rounded-full bg-emerald-100 text-3xl text-emerald-600">
+    <i class="fa-solid fa-check"></i>
+  </span>
+  <h1 class="text-3xl font-extrabold text-ink">{{ 'success.title' | translate }}</h1>
+  <p class="text-navy/70">{{ 'success.text' | translate }}</p>
+  <div class="mt-2 flex flex-wrap justify-center gap-3">
+    <a routerLink="/allorders" class="btn">{{ 'success.viewOrders' | translate }}</a>
+    <a routerLink="/products" class="btn-outline">{{ 'common.continueShopping' | translate }}</a>
+  </div>
+</section>

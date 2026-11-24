@@ -1,1 +1,34 @@
-<p>brand-list works!</p>
+<div class="mx-auto max-w-7xl px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-extrabold text-ink sm:text-3xl">{{ 'brands.title' | translate }}</h1>
+      <p class="mt-1 text-sm text-navy/70">{{ 'brands.subtitle' | translate }}</p>
+    </div>
+    <div class="relative w-full sm:w-72">
+      <i class="fa-solid fa-magnifying-glass pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-navy/50"></i>
+      <input type="search" class="input ps-9" [placeholder]="'brands.search' | translate" (input)="term.set($any($event.target).value)" />
+    </div>
+  </div>
+
+  @if (brands(); as list) {
+    @let shown = list | search: term();
+    @if (shown.length) {
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        @for (b of shown; track b._id) {
+          <a [routerLink]="['/brands', b._id]" class="card group flex flex-col items-center gap-3 p-4 transition hover:border-primary">
+            <span class="flex h-24 w-full items-center justify-center">
+              <img [src]="b.image" [alt]="b.name" width="140" height="96" loading="lazy" class="max-h-full w-auto object-contain" />
+            </span>
+            <span class="text-sm font-semibold text-ink group-hover:text-primary">{{ b.name }}</span>
+          </a>
+        }
+      </div>
+    } @else {
+      <app-empty-state icon="fa-solid fa-tag" [title]="'brands.none' | translate" />
+    }
+  } @else {
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <app-skeleton [count]="12" />
+    </div>
+  }
+</div>

@@ -1,1 +1,43 @@
-<p>category-details works!</p>
+<div class="mx-auto max-w-7xl px-4 py-8">
+  @if (category() === undefined) {
+    <div class="mb-8 h-28 animate-pulse rounded-2xl bg-cloud"></div>
+  } @else if (category(); as c) {
+    <header class="mb-8 rounded-2xl bg-mist p-5">
+      <div class="flex items-center gap-5">
+        <img [src]="c.image" [alt]="c.name" width="80" height="80" class="h-20 w-20 rounded-xl object-cover" />
+        <h1 class="text-2xl font-extrabold text-ink sm:text-3xl">{{ c.name }}</h1>
+      </div>
+      @if (subcategories().length) {
+        <div class="mt-4 flex flex-wrap gap-2">
+          @for (s of subcategories(); track s._id) {
+            <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-navy">{{ s.name }}</span>
+          }
+        </div>
+      }
+    </header>
+
+    @if (result() === undefined) {
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4"><app-skeleton [count]="8" /></div>
+    } @else if (result(); as res) {
+      @if (res.data.length) {
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+          @for (p of res.data; track p._id) {
+            <app-product-card [product]="p" />
+          }
+        </div>
+        <app-pagination [current]="res.metadata.currentPage" [total]="res.metadata.numberOfPages" (pageChange)="goPage($event)" />
+      } @else {
+        <app-empty-state icon="fa-solid fa-box-open" [title]="'categories.noProducts' | translate" />
+      }
+    } @else {
+      <app-empty-state icon="fa-solid fa-box-open" [title]="'categories.noProducts' | translate" />
+    }
+  } @else {
+    <app-empty-state
+      icon="fa-solid fa-layer-group"
+      [title]="'categories.notFound' | translate"
+      [actionLabel]="'nav.categories' | translate"
+      actionLink="/categories"
+    />
+  }
+</div>

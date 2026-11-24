@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { WishlistService } from '../../core/services/wishlist.service';
+import { EmptyState } from '../../shared/components/empty-state/empty-state';
+import { ProductCard } from '../../shared/components/product-card/product-card';
+import { Skeleton } from '../../shared/components/skeleton/skeleton';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [],
+  imports: [TranslatePipe, ProductCard, EmptyState, Skeleton],
   templateUrl: './wishlist.html',
-  styleUrl: './wishlist.css',
 })
-export class Wishlist {}
+export class Wishlist {
+  protected readonly wishlist = inject(WishlistService);
+}

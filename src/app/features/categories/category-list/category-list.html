@@ -1,1 +1,32 @@
-<p>category-list works!</p>
+<div class="mx-auto max-w-7xl px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-extrabold text-ink sm:text-3xl">{{ 'categories.title' | translate }}</h1>
+      <p class="mt-1 text-sm text-navy/70">{{ 'categories.subtitle' | translate }}</p>
+    </div>
+    <div class="relative w-full sm:w-72">
+      <i class="fa-solid fa-magnifying-glass pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-navy/50"></i>
+      <input type="search" class="input ps-9" [placeholder]="'categories.search' | translate" (input)="term.set($any($event.target).value)" />
+    </div>
+  </div>
+
+  @if (categories(); as list) {
+    @let shown = list | search: term();
+    @if (shown.length) {
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        @for (c of shown; track c._id) {
+          <a [routerLink]="['/categories', c._id]" class="card group overflow-hidden transition hover:border-primary">
+            <div class="aspect-square overflow-hidden bg-mist">
+              <img [src]="c.image" [alt]="c.name" width="300" height="300" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+            </div>
+            <p class="p-3 text-center font-semibold text-ink group-hover:text-primary">{{ c.name }}</p>
+          </a>
+        }
+      </div>
+    } @else {
+      <app-empty-state icon="fa-solid fa-layer-group" [title]="'categories.none' | translate" />
+    }
+  } @else {
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"><app-skeleton [count]="8" /></div>
+  }
+</div>
