@@ -1,1 +1,121 @@
-{}
+{
+  "common": {
+    "home": "Home", "viewAll": "View all", "remove": "Remove", "total": "Total", "items": "Items",
+    "required": "Required", "saving": "Saving...", "saveChanges": "Save changes",
+    "startShopping": "Start shopping", "continueShopping": "Continue shopping",
+    "browseProducts": "Browse products", "backHome": "Back home",
+    "sold": "{{count}} sold", "inStock": "{{count}} in stock", "outOfStock": "Out of stock",
+    "reviews": "{{count}} reviews"
+  },
+  "errors": { "generic": "Something went wrong" },
+  "nav": {
+    "home": "Home", "products": "Products", "categories": "Categories", "brands": "Brands",
+    "search": "Search products...", "wishlist": "Wishlist", "cart": "Cart", "login": "Login",
+    "profile": "Profile", "dashboard": "Dashboard", "myOrders": "My orders",
+    "changePassword": "Change password", "logout": "Logout", "account": "Account",
+    "menu": "Menu", "otherLang": "العربية"
+  },
+  "footer": { "rights": "© {{year}} Souqly. All rights reserved." },
+  "toast": {
+    "welcome": "Welcome back", "registered": "Account created, please sign in",
+    "codeSent": "Code sent to your email", "passwordReset": "Password updated, please sign in",
+    "passwordChanged": "Password changed", "profileUpdated": "Profile updated",
+    "cartAdded": "Added to cart", "itemRemoved": "Item removed", "cartCleared": "Cart cleared",
+    "wishAdded": "Added to wishlist", "wishRemoved": "Removed from wishlist",
+    "addressAdded": "Address added", "addressRemoved": "Address removed"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back", "signIn": "Sign in", "signingIn": "Signing in...",
+    "email": "Email", "password": "Password", "forgot": "Forgot password?",
+    "noAccount": "Don't have an account?", "signUp": "Sign up",
+    "join": "Join Souqly", "createAccount": "Create account", "creating": "Creating...",
+    "name": "Name", "phone": "Phone", "confirmPassword": "Confirm password",
+    "haveAccount": "Already have an account?",
+    "err": {
+      "email": "Enter a valid email",
+      "passwordRequired": "Password is required (min 6 characters)",
+      "name": "Name must be 3-20 characters",
+      "phone": "Enter a valid Egyptian phone number",
+      "passwordPattern": "Starts with a capital letter, 6-11 characters (letters and numbers)",
+      "mismatch": "Passwords don't match",
+      "code": "Code is required"
+    },
+    "reset": {
+      "title": "Reset password", "step": "Step {{n}} of 3",
+      "emailHelp": "Enter your email and we'll send you a reset code.",
+      "sendCode": "Send code", "sending": "Sending...",
+      "codeHelp": "Enter the code sent to {{email}}.", "code": "Reset code",
+      "verify": "Verify code", "verifying": "Verifying...",
+      "differentEmail": "Use a different email", "newPassword": "New password",
+      "update": "Update password", "remembered": "Remembered it?"
+    },
+    "change": {
+      "title": "Change password", "current": "Current password", "new": "New password",
+      "confirm": "Confirm new password", "update": "Update password", "back": "Back to profile"
+    }
+  },
+  "home": { "shopNow": "Shop now", "byCategory": "Shop by category", "trending": "Trending now", "byBrand": "Shop by brand" },
+  "products": {
+    "filters": "Filters", "categories": "Categories", "priceRange": "Price range (EGP)",
+    "min": "Min", "max": "Max", "apply": "Apply", "under": "Under {{value}}", "brands": "Brands",
+    "clearAll": "Clear all filters", "resultsFor": "Results for \"{{keyword}}\"", "sortBy": "Sort by",
+    "gridView": "Grid view", "listView": "List view",
+    "sort": { "default": "Default", "priceAsc": "Price: low to high", "priceDesc": "Price: high to low", "top": "Top rated", "best": "Best selling" },
+    "noneTitle": "No products found", "noneText": "Try changing or clearing the filters.", "clearFilters": "Clear filters",
+    "add": "Add", "addToCart": "Add to cart",
+    "notFoundTitle": "Product not found", "notFoundText": "This product may have been removed.",
+    "moreFrom": "More from {{name}}"
+  },
+  "brands": { "title": "All brands", "subtitle": "Shop your favourite brands", "search": "Search brands...", "none": "No brands found", "notFound": "Brand not found", "noProducts": "No products for this brand yet" },
+  "categories": { "title": "All categories", "subtitle": "Find what you need", "search": "Search categories...", "none": "No categories found", "notFound": "Category not found", "noProducts": "No products in this category yet" },
+  "cart": {
+    "title": "Shopping cart", "summary": "Order summary", "checkout": "Proceed to checkout", "clear": "Clear cart",
+    "decrease": "Decrease", "increase": "Increase",
+    "emptyTitle": "Your cart is empty", "emptyText": "Why don't you try something from our shop?"
+  },
+  "wishlist": { "title": "My wishlist", "toggle": "Toggle wishlist", "emptyTitle": "Your wishlist is empty", "emptyText": "Tap the heart on any product to save it here." },
+  "checkout": {
+    "title": "Complete your order", "shipping": "Shipping address",
+    "selectSaved": "Select a saved address or enter a new one", "useDifferent": "Use a different address",
+    "city": "City", "cityPh": "e.g. Cairo", "phone": "Phone", "street": "Street address",
+    "streetPh": "Street, building, floor, apartment",
+    "cityRequired": "City is required", "addressRequired": "Address is required",
+    "saveAddress": "Save this address for next time", "addressName": "Address name", "addressNamePh": "Home, Work...",
+    "payment": "Payment method", "cash": "Cash on delivery", "cashText": "Pay when your order arrives",
+    "online": "Pay online", "onlineText": "Secure card payment via Stripe",
+    "summary": "Order summary", "placeOrder": "Place order", "continuePayment": "Continue to payment",
+    "processing": "Processing...", "backToCart": "Back to cart",
+    "emptyTitle": "Nothing to check out", "emptyText": "Your cart is empty."
+  },
+  "success": { "title": "Congratulations", "text": "Your order has been placed and will be delivered to you soon.", "viewOrders": "View my orders" },
+  "notFound": { "title": "Page not found", "text": "This page doesn't exist." },
+  "profile": { "tabs": { "overview": "Overview", "orders": "My orders", "interests": "Interests", "addresses": "Addresses", "dashboard": "Dashboard" } },
+  "overview": {
+    "info": "Personal information", "security": "Security",
+    "securityText": "Update your password regularly to keep your account safe.",
+    "changePassword": "Change password", "logout": "Logout"
+  },
+  "orders": {
+    "title": "My orders", "order": "Order #{{id}}", "paid": "Paid", "unpaid": "Unpaid",
+    "delivered": "Delivered", "processing": "Processing", "payOnline": "Paid online", "payCash": "Cash on delivery",
+    "total": "Total", "emptyTitle": "No orders yet", "emptyText": "When you place an order it will show up here."
+  },
+  "interests": {
+    "title": "Your interests", "basedOn": "Based on the {{count}} items in your wishlist", "explore": "Explore {{name}}",
+    "emptyTitle": "No interests yet", "emptyText": "Add products to your wishlist and we'll group them by category here.",
+    "other": "Other"
+  },
+  "addresses": {
+    "addNew": "Add a new address", "saved": "Saved addresses", "name": "Name", "add": "Add address",
+    "delete": "Delete address", "emptyTitle": "No saved addresses", "emptyText": "Add your first address above."
+  },
+  "dashboard": {
+    "orders": "Total orders", "spent": "Total spent", "avg": "Average order", "delivered": "Delivered",
+    "paidCount": "{{count}} paid", "monthly": "Spending per month", "payment": "Payment method",
+    "cash": "Cash on delivery", "online": "Online", "byCategory": "Spending by category",
+    "topProducts": "Top products", "topBrands": "Top brands", "deliveredTo": "Delivered to",
+    "itemsCount": "{{count}} items", "ordersCount": "{{count}} orders",
+    "emptyTitle": "No data yet", "emptyText": "Place your first order and your analytics will appear here.",
+    "spentLabel": "Spent (EGP)"
+  }
+}

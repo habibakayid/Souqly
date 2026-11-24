@@ -1,1 +1,121 @@
-{}
+{
+  "common": {
+    "home": "الرئيسية", "viewAll": "عرض الكل", "remove": "حذف", "total": "الإجمالي", "items": "العناصر",
+    "required": "مطلوب", "saving": "جارٍ الحفظ...", "saveChanges": "حفظ التغييرات",
+    "startShopping": "ابدأ التسوق", "continueShopping": "واصل التسوق",
+    "browseProducts": "تصفح المنتجات", "backHome": "العودة للرئيسية",
+    "sold": "تم بيع {{count}}", "inStock": "{{count}} متوفر", "outOfStock": "غير متوفر",
+    "reviews": "{{count}} تقييم"
+  },
+  "errors": { "generic": "حدث خطأ ما" },
+  "nav": {
+    "home": "الرئيسية", "products": "المنتجات", "categories": "الفئات", "brands": "الماركات",
+    "search": "ابحث عن المنتجات...", "wishlist": "المفضلة", "cart": "السلة", "login": "تسجيل الدخول",
+    "profile": "حسابي", "dashboard": "لوحة التحليلات", "myOrders": "طلباتي",
+    "changePassword": "تغيير كلمة المرور", "logout": "تسجيل الخروج", "account": "الحساب",
+    "menu": "القائمة", "otherLang": "English"
+  },
+  "footer": { "rights": "© {{year}} سوقلي. جميع الحقوق محفوظة." },
+  "toast": {
+    "welcome": "أهلاً بعودتك", "registered": "تم إنشاء الحساب، سجّل الدخول من فضلك",
+    "codeSent": "تم إرسال الكود إلى بريدك", "passwordReset": "تم تحديث كلمة المرور، سجّل الدخول من فضلك",
+    "passwordChanged": "تم تغيير كلمة المرور", "profileUpdated": "تم تحديث الحساب",
+    "cartAdded": "تمت الإضافة إلى السلة", "itemRemoved": "تم حذف المنتج", "cartCleared": "تم تفريغ السلة",
+    "wishAdded": "تمت الإضافة إلى المفضلة", "wishRemoved": "تم الحذف من المفضلة",
+    "addressAdded": "تمت إضافة العنوان", "addressRemoved": "تم حذف العنوان"
+  },
+  "auth": {
+    "welcomeBack": "أهلاً بعودتك", "signIn": "تسجيل الدخول", "signingIn": "جارٍ تسجيل الدخول...",
+    "email": "البريد الإلكتروني", "password": "كلمة المرور", "forgot": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟", "signUp": "إنشاء حساب",
+    "join": "انضم إلى سوقلي", "createAccount": "إنشاء حساب", "creating": "جارٍ الإنشاء...",
+    "name": "الاسم", "phone": "رقم الهاتف", "confirmPassword": "تأكيد كلمة المرور",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "err": {
+      "email": "أدخل بريدًا إلكترونيًا صحيحًا",
+      "passwordRequired": "كلمة المرور مطلوبة (6 أحرف على الأقل)",
+      "name": "الاسم من 3 إلى 20 حرفًا",
+      "phone": "أدخل رقم هاتف مصري صحيحًا",
+      "passwordPattern": "تبدأ بحرف كبير، من 6 إلى 11 حرفًا (حروف وأرقام)",
+      "mismatch": "كلمتا المرور غير متطابقتين",
+      "code": "الكود مطلوب"
+    },
+    "reset": {
+      "title": "استعادة كلمة المرور", "step": "الخطوة {{n}} من 3",
+      "emailHelp": "أدخل بريدك الإلكتروني وسنرسل لك كود الاستعادة.",
+      "sendCode": "إرسال الكود", "sending": "جارٍ الإرسال...",
+      "codeHelp": "أدخل الكود المرسل إلى {{email}}.", "code": "كود الاستعادة",
+      "verify": "تحقق من الكود", "verifying": "جارٍ التحقق...",
+      "differentEmail": "استخدم بريدًا آخر", "newPassword": "كلمة المرور الجديدة",
+      "update": "تحديث كلمة المرور", "remembered": "تذكرتها؟"
+    },
+    "change": {
+      "title": "تغيير كلمة المرور", "current": "كلمة المرور الحالية", "new": "كلمة المرور الجديدة",
+      "confirm": "تأكيد كلمة المرور الجديدة", "update": "تحديث كلمة المرور", "back": "العودة إلى حسابي"
+    }
+  },
+  "home": { "shopNow": "تسوّق الآن", "byCategory": "تسوّق حسب الفئة", "trending": "الأكثر رواجًا", "byBrand": "تسوّق حسب الماركة" },
+  "products": {
+    "filters": "الفلاتر", "categories": "الفئات", "priceRange": "نطاق السعر (ج.م)",
+    "min": "الأدنى", "max": "الأعلى", "apply": "تطبيق", "under": "أقل من {{value}}", "brands": "الماركات",
+    "clearAll": "مسح كل الفلاتر", "resultsFor": "نتائج البحث عن \"{{keyword}}\"", "sortBy": "ترتيب حسب",
+    "gridView": "عرض شبكي", "listView": "عرض قائمة",
+    "sort": { "default": "الافتراضي", "priceAsc": "السعر: الأقل أولاً", "priceDesc": "السعر: الأعلى أولاً", "top": "الأعلى تقييمًا", "best": "الأكثر مبيعًا" },
+    "noneTitle": "لا توجد منتجات", "noneText": "جرّب تغيير الفلاتر أو مسحها.", "clearFilters": "مسح الفلاتر",
+    "add": "أضف", "addToCart": "أضف إلى السلة",
+    "notFoundTitle": "المنتج غير موجود", "notFoundText": "ربما تم حذف هذا المنتج.",
+    "moreFrom": "المزيد من {{name}}"
+  },
+  "brands": { "title": "كل الماركات", "subtitle": "تسوّق ماركاتك المفضلة", "search": "ابحث عن ماركة...", "none": "لا توجد ماركات", "notFound": "الماركة غير موجودة", "noProducts": "لا توجد منتجات لهذه الماركة بعد" },
+  "categories": { "title": "كل الفئات", "subtitle": "اعثر على ما تحتاجه", "search": "ابحث عن فئة...", "none": "لا توجد فئات", "notFound": "الفئة غير موجودة", "noProducts": "لا توجد منتجات في هذه الفئة بعد" },
+  "cart": {
+    "title": "سلة التسوق", "summary": "ملخص الطلب", "checkout": "إتمام الشراء", "clear": "تفريغ السلة",
+    "decrease": "تقليل", "increase": "زيادة",
+    "emptyTitle": "سلتك فارغة", "emptyText": "ما رأيك أن تجرب شيئًا من متجرنا؟"
+  },
+  "wishlist": { "title": "مفضلتي", "toggle": "إضافة أو حذف من المفضلة", "emptyTitle": "قائمة المفضلة فارغة", "emptyText": "اضغط على القلب في أي منتج لحفظه هنا." },
+  "checkout": {
+    "title": "أكمل طلبك", "shipping": "عنوان الشحن",
+    "selectSaved": "اختر عنوانًا محفوظًا أو أدخل عنوانًا جديدًا", "useDifferent": "استخدم عنوانًا آخر",
+    "city": "المدينة", "cityPh": "مثال: القاهرة", "phone": "رقم الهاتف", "street": "العنوان بالتفصيل",
+    "streetPh": "الشارع، المبنى، الدور، الشقة",
+    "cityRequired": "المدينة مطلوبة", "addressRequired": "العنوان مطلوب",
+    "saveAddress": "احفظ هذا العنوان للمرة القادمة", "addressName": "اسم العنوان", "addressNamePh": "المنزل، العمل...",
+    "payment": "طريقة الدفع", "cash": "الدفع عند الاستلام", "cashText": "ادفع عند وصول طلبك",
+    "online": "الدفع أونلاين", "onlineText": "دفع آمن بالبطاقة عبر Stripe",
+    "summary": "ملخص الطلب", "placeOrder": "تأكيد الطلب", "continuePayment": "المتابعة للدفع",
+    "processing": "جارٍ المعالجة...", "backToCart": "العودة إلى السلة",
+    "emptyTitle": "لا يوجد ما تشتريه", "emptyText": "سلتك فارغة."
+  },
+  "success": { "title": "تهانينا", "text": "تم تأكيد طلبك وسيصلك قريبًا.", "viewOrders": "عرض طلباتي" },
+  "notFound": { "title": "الصفحة غير موجودة", "text": "هذه الصفحة غير موجودة." },
+  "profile": { "tabs": { "overview": "نظرة عامة", "orders": "طلباتي", "interests": "اهتماماتي", "addresses": "العناوين", "dashboard": "لوحة التحليلات" } },
+  "overview": {
+    "info": "البيانات الشخصية", "security": "الأمان",
+    "securityText": "حدّث كلمة المرور بانتظام للحفاظ على أمان حسابك.",
+    "changePassword": "تغيير كلمة المرور", "logout": "تسجيل الخروج"
+  },
+  "orders": {
+    "title": "طلباتي", "order": "طلب رقم {{id}}", "paid": "مدفوع", "unpaid": "غير مدفوع",
+    "delivered": "تم التسليم", "processing": "قيد التجهيز", "payOnline": "مدفوع أونلاين", "payCash": "الدفع عند الاستلام",
+    "total": "الإجمالي", "emptyTitle": "لا توجد طلبات بعد", "emptyText": "عندما تُنشئ طلبًا سيظهر هنا."
+  },
+  "interests": {
+    "title": "اهتماماتك", "basedOn": "بناءً على {{count}} منتج في مفضلتك", "explore": "استكشف {{name}}",
+    "emptyTitle": "لا توجد اهتمامات بعد", "emptyText": "أضف منتجات إلى المفضلة وسنجمعها هنا حسب الفئة.",
+    "other": "أخرى"
+  },
+  "addresses": {
+    "addNew": "إضافة عنوان جديد", "saved": "العناوين المحفوظة", "name": "الاسم", "add": "إضافة العنوان",
+    "delete": "حذف العنوان", "emptyTitle": "لا توجد عناوين محفوظة", "emptyText": "أضف أول عنوان لك بالأعلى."
+  },
+  "dashboard": {
+    "orders": "إجمالي الطلبات", "spent": "إجمالي الإنفاق", "avg": "متوسط الطلب", "delivered": "تم تسليمه",
+    "paidCount": "{{count}} مدفوع", "monthly": "الإنفاق الشهري", "payment": "طريقة الدفع",
+    "cash": "الدفع عند الاستلام", "online": "أونلاين", "byCategory": "الإنفاق حسب الفئة",
+    "topProducts": "أكثر المنتجات شراءً", "topBrands": "أكثر الماركات", "deliveredTo": "التسليم إلى",
+    "itemsCount": "{{count}} منتج", "ordersCount": "{{count}} طلب",
+    "emptyTitle": "لا توجد بيانات بعد", "emptyText": "أنشئ أول طلب وستظهر تحليلاتك هنا.",
+    "spentLabel": "المصروف (ج.م)"
+  }
+}

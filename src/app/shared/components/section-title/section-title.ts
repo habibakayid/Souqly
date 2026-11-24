@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-section-title',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './section-title.html',
-  styleUrl: './section-title.css',
 })
-export class SectionTitle {}
+export class SectionTitle {
+  readonly title = input.required<string>();
+  readonly linkText = input<string>();
+  readonly link = input<string>();
+}

@@ -1,3 +1,1 @@
-export const env = {
-  baseUrl: '',
-};
+export const env = { baseUrl: 'https://ecommerce.routemisr.com' };

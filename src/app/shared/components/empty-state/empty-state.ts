@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-empty-state',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './empty-state.html',
-  styleUrl: './empty-state.css',
 })
-export class EmptyState {}
+export class EmptyState {
+  readonly icon = input('fa-regular fa-face-frown');
+  readonly title = input.required<string>();
+  readonly text = input<string>();
+  readonly actionLabel = input<string>();
+  readonly actionLink = input<string>();
+}

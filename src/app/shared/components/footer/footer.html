@@ -1,1 +1,15 @@
-<p>footer works!</p>
+<footer class="mt-16 bg-navy text-white">
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 py-10 text-center">
+    <a routerLink="/home">
+      <img src="/assets/images/logo.png" alt="Souqly" class="h-9 w-auto brightness-0 invert" />
+    </a>
+    <nav class="flex flex-wrap items-center justify-center gap-6">
+      @for (l of links; track l.path) {
+        <a [routerLink]="l.path" class="text-sm text-white/80 transition hover:text-white">{{ l.key | translate }}</a>
+      }
+    </nav>
+    <p class="border-t border-white/10 pt-5 text-xs text-white/60">
+      {{ 'footer.rights' | translate: { year } }}
+    </p>
+  </div>
+</footer>

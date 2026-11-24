@@ -1,1 +1,125 @@
-<p>header works!</p>
+<header class="sticky top-0 z-40 border-b border-cloud bg-white/95 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
+
+    <button type="button" class="lg:hidden" [attr.aria-label]="'nav.menu' | translate" (click)="drawer.set(true)">
+      <i class="fa-solid fa-bars text-xl text-ink"></i>
+    </button>
+
+    <a routerLink="/home" class="shrink-0">
+      <img src="/assets/images/logo.png" alt="Souqly" class="h-9 w-auto" />
+    </a>
+
+    
+    <nav class="ms-6 hidden items-center gap-6 lg:flex">
+      @for (l of links; track l.path) {
+        <a
+          [routerLink]="l.path"
+          routerLinkActive="text-primary"
+          class="text-sm font-semibold text-ink transition hover:text-primary"
+        >
+          {{ l.key | translate }}
+        </a>
+      }
+    </nav>
+
+    
+    <form class="relative mx-auto hidden max-w-md flex-1 md:block" (submit)="$event.preventDefault(); search(q.value)">
+      <i class="fa-solid fa-magnifying-glass pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-navy/50"></i>
+      <input #q type="search" class="input ps-9" [placeholder]="'nav.search' | translate" />
+    </form>
+
+    <div class="ms-auto flex items-center gap-1 sm:gap-2">
+      <button type="button" class="rounded-lg px-2 py-1 text-xs font-bold text-primary hover:bg-mist" (click)="lang.toggle()">
+        {{ 'nav.otherLang' | translate }}
+      </button>
+
+      <a routerLink="/wishlist" class="relative p-2" [attr.aria-label]="'nav.wishlist' | translate">
+        <i class="fa-regular fa-heart text-lg text-ink"></i>
+        @if (hydrated() && wishlist.count() > 0) {
+          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+            {{ wishlist.count() }}
+          </span>
+        }
+      </a>
+
+      <a routerLink="/cart" class="relative p-2" [attr.aria-label]="'nav.cart' | translate">
+        <i class="fa-solid fa-cart-shopping text-lg text-ink"></i>
+        @if (hydrated() && cart.count() > 0) {
+          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+            {{ cart.count() }}
+          </span>
+        }
+      </a>
+
+     
+      @if (!hydrated()) {
+        <span class="inline-block h-9 w-9"></span>
+      } @else if (auth.isLoggedIn()) {
+        <div class="relative">
+          <button
+            type="button"
+            class="grid h-9 w-9 place-items-center rounded-full bg-primary text-sm font-bold text-white"
+            [attr.aria-label]="'nav.account' | translate"
+            (click)="menu.set(!menu())"
+          >
+            {{ auth.userName().charAt(0).toUpperCase() || 'U' }}
+          </button>
+          @if (menu()) {
+            <div class="fixed inset-0 z-40" (click)="menu.set(false)"></div>
+            <div class="absolute end-0 z-50 mt-2 w-56 rounded-xl border border-cloud bg-white p-2 shadow-lg">
+              <p class="truncate px-3 py-2 text-sm font-bold text-ink">{{ auth.userName() }}</p>
+              <a routerLink="/profile/overview" class="menu-item" (click)="menu.set(false)">
+                <i class="fa-regular fa-user"></i> {{ 'nav.profile' | translate }}
+              </a>
+              <a routerLink="/profile/orders" class="menu-item" (click)="menu.set(false)">
+                <i class="fa-solid fa-box"></i> {{ 'nav.myOrders' | translate }}
+              </a>
+              <a routerLink="/profile/dashboard" class="menu-item" (click)="menu.set(false)">
+                <i class="fa-solid fa-chart-pie"></i> {{ 'nav.dashboard' | translate }}
+              </a>
+              <a routerLink="/change-password" class="menu-item" (click)="menu.set(false)">
+                <i class="fa-solid fa-key"></i> {{ 'nav.changePassword' | translate }}
+              </a>
+              <button type="button" class="menu-item w-full text-red-600" (click)="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> {{ 'nav.logout' | translate }}
+              </button>
+            </div>
+          }
+        </div>
+      } @else {
+        <a routerLink="/login" class="btn !px-4 !py-2 text-sm">{{ 'nav.login' | translate }}</a>
+      }
+    </div>
+  </div>
+</header>
+
+
+@if (drawer()) {
+  <div class="fixed inset-0 z-50 lg:hidden">
+    <div class="absolute inset-0 bg-ink/50" (click)="drawer.set(false)"></div>
+    <aside class="absolute inset-y-0 start-0 flex w-72 flex-col gap-4 bg-white p-5">
+      <div class="flex items-center justify-between">
+        <img src="/assets/images/logo.png" alt="Souqly" class="h-8 w-auto" />
+        <button type="button" [attr.aria-label]="'common.remove' | translate" (click)="drawer.set(false)">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+      <form class="relative" (submit)="$event.preventDefault(); search(mq.value)">
+        <i class="fa-solid fa-magnifying-glass pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-navy/50"></i>
+        <input #mq type="search" class="input ps-9" [placeholder]="'nav.search' | translate" />
+      </form>
+      <nav class="flex flex-col">
+        @for (l of links; track l.path) {
+          <a [routerLink]="l.path" routerLinkActive="text-primary" class="menu-item" (click)="drawer.set(false)">
+            {{ l.key | translate }}
+          </a>
+        }
+      </nav>
+      @if (hydrated() && auth.isLoggedIn()) {
+        <button type="button" class="menu-item mt-auto text-red-600" (click)="logout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> {{ 'nav.logout' | translate }}
+        </button>
+      }
+    </aside>
+  </div>
+}

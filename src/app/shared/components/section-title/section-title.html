@@ -1,1 +1,8 @@
-<p>section-title works!</p>
+<div class="mb-5 flex items-end justify-between gap-4">
+  <h2 class="text-xl font-extrabold text-ink sm:text-2xl">{{ title() }}</h2>
+  @if (link() && linkText()) {
+    <a [routerLink]="link()" class="shrink-0 text-sm font-semibold text-primary hover:underline">
+      {{ linkText() }} <i class="fa-solid fa-arrow-right text-xs rtl:rotate-180"></i>
+    </a>
+  }
+</div>

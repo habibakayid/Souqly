@@ -1,8 +1,11 @@
-export interface Named {
+import { Brand } from './brand';
+import { Category } from './category';
+
+export interface SubCategory {
   _id: string;
   name: string;
   slug: string;
-  image?: string;
+  category?: string;
 }
 
 export interface Product {
@@ -18,9 +21,9 @@ export interface Product {
   ratingsQuantity: number;
   sold: number;
   quantity: number;
-  category: Named;
-  brand: Named;
-  subcategory?: Named[];
+  category: Category;
+  brand: Brand;
+  subcategory?: SubCategory[];
 }
 
 export interface Paged<T> {

@@ -1,1 +1,13 @@
-<p>empty-state works!</p>
+<div class="mx-auto flex max-w-md flex-col items-center gap-3 px-4 py-16 text-center">
+  <span class="grid h-16 w-16 place-items-center rounded-full bg-mist text-2xl text-primary">
+    <i [class]="icon()"></i>
+  </span>
+  <h3 class="text-lg font-bold text-ink">{{ title() }}</h3>
+  @if (text()) {
+    <p class="text-sm text-navy/70">{{ text() }}</p>
+  }
+  @if (actionLabel() && actionLink()) {
+    <a [routerLink]="actionLink()" class="btn mt-2">{{ actionLabel() }}</a>
+  }
+  <ng-content />
+</div>

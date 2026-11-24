@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 @Component({
   selector: 'app-skeleton',
-  imports: [],
   templateUrl: './skeleton.html',
-  styleUrl: './skeleton.css',
 })
-export class Skeleton {}
+export class Skeleton {
+  readonly count = input(1);
+  readonly shape = input<'card' | 'line'>('card');
+  protected readonly items = computed(() => Array.from({ length: this.count() }, (_, i) => i));
+}

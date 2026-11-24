@@ -1,1 +1,9 @@
-<p>main-layout works!</p>
+<app-header />
+<main class="min-h-[70vh]">
+  <router-outlet />
+</main>
+@defer (on viewport) {
+  <app-footer />
+} @placeholder {
+  <div class="h-40"></div>
+}

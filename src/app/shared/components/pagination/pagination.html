@@ -1,1 +1,25 @@
-<p>pagination works!</p>
+@if (total() > 1) {
+  <nav class="mt-8 flex items-center justify-center gap-1" aria-label="Pagination">
+    <button type="button" class="btn-outline !px-3 !py-2" [disabled]="current() === 1" aria-label="Previous" (click)="go(current() - 1)">
+      <i class="fa-solid fa-chevron-left text-xs rtl:rotate-180"></i>
+    </button>
+    @for (p of pages(); track $index) {
+      @if (p === null) {
+        <span class="px-2 text-navy/50">…</span>
+      } @else {
+        <button
+          type="button"
+          class="h-9 min-w-9 rounded-lg px-2 text-sm font-semibold transition"
+          [class]="p === current() ? 'bg-primary text-white' : 'text-ink hover:bg-mist'"
+          [attr.aria-current]="p === current() ? 'page' : null"
+          (click)="go(p)"
+        >
+          {{ p }}
+        </button>
+      }
+    }
+    <button type="button" class="btn-outline !px-3 !py-2" [disabled]="current() === total()" aria-label="Next" (click)="go(current() + 1)">
+      <i class="fa-solid fa-chevron-right text-xs rtl:rotate-180"></i>
+    </button>
+  </nav>
+}
