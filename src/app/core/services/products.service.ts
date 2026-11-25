@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
+import { forkJoin, map, Observable, of, shareReplay, switchMap } from 'rxjs';
 import { env } from '../environments/env';
 import { Paged, Product, ProductQuery } from '../models/product';
 
@@ -8,16 +8,16 @@ import { Paged, Product, ProductQuery } from '../models/product';
 export class ProductsService {
   private readonly http = inject(HttpClient);
   private readonly url = `${env.baseUrl}/api/v1/products`;
+  private readonly cache = new Map<string, Observable<Product[]>>();
 
   list(q: ProductQuery = {}): Observable<Paged<Product>> {
     const keyword = q.keyword?.trim().toLowerCase();
     if (!keyword) return this.fetch(q);
 
-   
     const page = q.page ?? 1;
     const limit = q.limit ?? 12;
 
-    return this.fetchAll({ ...q, keyword: undefined, page: undefined, limit: 100 }).pipe(
+    return this.cachedAll({ ...q, keyword: undefined, page: undefined, limit: 100 }).pipe(
       map((all) => {
         const matched = all.filter((p) =>
           [p.title, p.category?.name, p.brand?.name].some((t) => t?.toLowerCase().includes(keyword)),
@@ -37,7 +37,17 @@ export class ProductsService {
     return this.http.get<{ data: Product }>(`${this.url}/${id}`).pipe(map((r) => r.data));
   }
 
-  
+ 
+  private cachedAll(q: ProductQuery): Observable<Product[]> {
+    const key = JSON.stringify(q);
+    let hit = this.cache.get(key);
+    if (!hit) {
+      hit = this.fetchAll(q).pipe(shareReplay({ bufferSize: 1, refCount: false }));
+      this.cache.set(key, hit);
+    }
+    return hit;
+  }
+
   private fetch(q: ProductQuery): Observable<Paged<Product>> {
     let p = new HttpParams();
     if (q.page) p = p.set('page', q.page);
@@ -51,7 +61,6 @@ export class ProductsService {
     return this.http.get<Paged<Product>>(this.url, { params: p });
   }
 
-  
   private fetchAll(q: ProductQuery): Observable<Product[]> {
     return this.fetch({ ...q, page: 1 }).pipe(
       switchMap((first) => {
