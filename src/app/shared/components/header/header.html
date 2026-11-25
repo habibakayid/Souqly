@@ -1,64 +1,73 @@
-<header class="sticky top-0 z-40 border-b border-cloud bg-white/95 backdrop-blur">
-  <div class="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-
+<header class="sticky top-0 z-40 bg-linear-to-r from-navy via-navy to-primary text-white shadow-lg">
+  <div class="mx-auto flex h-18 max-w-7xl items-center gap-4 px-4">
+   
     <button type="button" class="lg:hidden" [attr.aria-label]="'nav.menu' | translate" (click)="drawer.set(true)">
-      <i class="fa-solid fa-bars text-xl text-ink"></i>
+      <i class="fa-solid fa-bars text-xl text-white"></i>
     </button>
 
-    <a routerLink="/home" class="shrink-0">
-      <img src="/assets/images/logo.png" alt="Souqly" class="h-9 w-auto" />
+    <a routerLink="/home" class="shrink-0 rounded-lg bg-white px-2.5 py-1.5 shadow">
+      <img src="/assets/images/logo.png" alt="Souqly" class="h-8 w-auto" />
     </a>
 
-    
-    <nav class="ms-6 hidden items-center gap-6 lg:flex">
+   
+    <nav class="ms-4 hidden items-center gap-7 lg:flex">
       @for (l of links; track l.path) {
         <a
           [routerLink]="l.path"
-          routerLinkActive="text-primary"
-          class="text-sm font-semibold text-ink transition hover:text-primary"
+          routerLinkActive="!border-sky !text-white"
+          class="border-b-2 border-transparent pb-1 text-[15px] font-semibold tracking-wide text-white/75 transition hover:text-white"
         >
           {{ l.key | translate }}
         </a>
       }
     </nav>
 
-    
+   
     <form class="relative mx-auto hidden max-w-md flex-1 md:block" (submit)="$event.preventDefault(); search(q.value)">
       <i class="fa-solid fa-magnifying-glass pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-sm text-navy/50"></i>
-      <input #q type="search" class="input ps-9" [placeholder]="'nav.search' | translate" />
+      <input
+        #q
+        type="search"
+        class="input !rounded-full !border-transparent bg-white ps-9 text-ink placeholder:text-navy/50"
+        [placeholder]="'nav.search' | translate"
+      />
     </form>
 
     <div class="ms-auto flex items-center gap-1 sm:gap-2">
-      <button type="button" class="rounded-lg px-2 py-1 text-xs font-bold text-primary hover:bg-mist" (click)="lang.toggle()">
+      <button
+        type="button"
+        class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-white transition hover:bg-white/15"
+        (click)="lang.toggle()"
+      >
         {{ 'nav.otherLang' | translate }}
       </button>
 
-      <a routerLink="/wishlist" class="relative p-2" [attr.aria-label]="'nav.wishlist' | translate">
-        <i class="fa-regular fa-heart text-lg text-ink"></i>
+      <a routerLink="/wishlist" class="relative rounded-lg p-2 transition hover:bg-white/15" [attr.aria-label]="'nav.wishlist' | translate">
+        <i class="fa-regular fa-heart text-lg text-white"></i>
         @if (hydrated() && wishlist.count() > 0) {
-          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-sky px-1 text-[10px] font-bold text-ink">
             {{ wishlist.count() }}
           </span>
         }
       </a>
 
-      <a routerLink="/cart" class="relative p-2" [attr.aria-label]="'nav.cart' | translate">
-        <i class="fa-solid fa-cart-shopping text-lg text-ink"></i>
+      <a routerLink="/cart" class="relative rounded-lg p-2 transition hover:bg-white/15" [attr.aria-label]="'nav.cart' | translate">
+        <i class="fa-solid fa-cart-shopping text-lg text-white"></i>
         @if (hydrated() && cart.count() > 0) {
-          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
+          <span class="absolute -end-0.5 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-sky px-1 text-[10px] font-bold text-ink">
             {{ cart.count() }}
           </span>
         }
       </a>
 
-     
+    
       @if (!hydrated()) {
         <span class="inline-block h-9 w-9"></span>
       } @else if (auth.isLoggedIn()) {
         <div class="relative">
           <button
             type="button"
-            class="grid h-9 w-9 place-items-center rounded-full bg-primary text-sm font-bold text-white"
+            class="grid h-9 w-9 place-items-center rounded-full bg-sky text-sm font-bold text-ink ring-2 ring-white/40 transition hover:ring-white"
             [attr.aria-label]="'nav.account' | translate"
             (click)="menu.set(!menu())"
           >
@@ -66,7 +75,7 @@
           </button>
           @if (menu()) {
             <div class="fixed inset-0 z-40" (click)="menu.set(false)"></div>
-            <div class="absolute end-0 z-50 mt-2 w-56 rounded-xl border border-cloud bg-white p-2 shadow-lg">
+            <div class="absolute end-0 z-50 mt-2 w-56 rounded-xl border border-cloud bg-white p-2 text-navy shadow-xl">
               <p class="truncate px-3 py-2 text-sm font-bold text-ink">{{ auth.userName() }}</p>
               <a routerLink="/profile/overview" class="menu-item" (click)="menu.set(false)">
                 <i class="fa-regular fa-user"></i> {{ 'nav.profile' | translate }}
@@ -87,7 +96,12 @@
           }
         </div>
       } @else {
-        <a routerLink="/login" class="btn !px-4 !py-2 text-sm">{{ 'nav.login' | translate }}</a>
+        <a
+          routerLink="/login"
+          class="inline-flex items-center justify-center rounded-full bg-white px-5 py-2 text-sm font-bold text-navy transition hover:bg-mist"
+        >
+          {{ 'nav.login' | translate }}
+        </a>
       }
     </div>
   </div>

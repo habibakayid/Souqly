@@ -69,7 +69,7 @@ export function buildStats(orders: Order[], categories: Category[], brands: Bran
     }
   }
 
-  const fmt = new Intl.DateTimeFormat(locale, { month: 'short', year: '2-digit' });
+  const fmt = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' });
 
   return {
     totalOrders: orders.length,

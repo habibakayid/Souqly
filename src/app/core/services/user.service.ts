@@ -14,10 +14,11 @@ export class UserService {
   private readonly toastr = inject(ToastrService);
   private readonly translate = inject(TranslateService);
 
-  updateMe(body: Profile) {
-    return this.http.put(`${env.baseUrl}/api/v1/users/updateMe`, body).pipe(
+  updateMe(changes: Partial<Profile>) {
+    return this.http.put(`${env.baseUrl}/api/v1/users/updateMe`, changes).pipe(
       tap(() => {
-        this.auth.setProfile(body);
+        const current = this.auth.profile() ?? { name: '', email: '' };
+        this.auth.setProfile({ ...current, ...changes });
         this.toastr.success(this.translate.instant('toast.profileUpdated'));
       }),
     );

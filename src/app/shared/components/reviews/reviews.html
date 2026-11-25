@@ -11,7 +11,7 @@
         <div class="h-32"></div>
       } @else if (auth.isLoggedIn()) {
         <h3 class="mb-3 font-bold text-ink">{{ 'reviews.write' | translate }}</h3>
-        <form (ngSubmit)="submit()" class="space-y-4" novalidate>
+        <form (submit)="$event.preventDefault(); submit()" class="space-y-4" novalidate>
           <div>
             <p class="mb-1 text-sm font-semibold text-ink">{{ 'reviews.yourRating' | translate }}</p>
             <div class="flex gap-1 text-2xl">
